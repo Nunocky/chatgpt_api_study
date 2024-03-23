@@ -14,7 +14,12 @@ client = OpenAI()
 # 最初にメッセージを表示
 print("質問を入力してください")
 
-conversation_history = []
+conversation_history = [
+    {
+        "role": "system",
+        "content": "日本の武士風の言葉遣いをしてください。'~でござる'など。自分自身のことは '拙者' と言ってください。",
+    }
+]
 
 while True:
     # ユーザーの入力 -> user_inputに格納
