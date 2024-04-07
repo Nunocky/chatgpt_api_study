@@ -1,8 +1,15 @@
-from langchain.agents import initialize_agent, Tool
+#!/usr/bin/env python3
+
+from langchain.agents import initialize_agent
+from langchain.agents import Tool
 from langchain_community.utilities.google_search import GoogleSearchAPIWrapper
 from langchain.prompts import PromptTemplate
 from langchain.agents import AgentType
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
+
+# LangChainDeprecationWarning: The function `initialize_agent` was deprecated in LangChain 0.1.0 and will be
+# removed in 0.2.0. Use Use new agent constructor methods like
+# create_react_agent, create_json_agent, create_structured_chat_agent, etc. instead.
 
 
 def create_prompt(user_input):
