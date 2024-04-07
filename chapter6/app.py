@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
-from langchain.agents import initialize_agent
+import pprint
+
+# from langchain.agents import initialize_agent
 from langchain.agents import Tool
 from langchain_community.utilities.google_search import GoogleSearchAPIWrapper
 from langchain.prompts import PromptTemplate
 from langchain.agents import AgentType
 from langchain_openai import ChatOpenAI
+from langchain import hub
+from langchain.agents import AgentExecutor, create_openai_tools_agent
+
 
 # LangChainDeprecationWarning: The function `initialize_agent` was deprecated in LangChain 0.1.0 and will be
 # removed in 0.2.0. Use Use new agent constructor methods like
@@ -43,8 +48,10 @@ def define_tools():
 
 
 def write_response_to_file(response, filename):
+    pprint.pprint(response)
+
     with open(filename, "w", encoding="utf-8") as file:
-        file.write(response)
+        file.write(response["output"])
     print("出力が完了しました")
 
 
@@ -53,12 +60,19 @@ def main():
 
     tools = define_tools()
 
-    agent = initialize_agent(tools, llm, agent=AgentType.OPENAI_FUNCTIONS)
+    # agent = initialize_agent(tools, llm, agent=AgentType.OPENAI_FUNCTIONS)
 
-    theme = input("記事のテーマを入力してください: ")
-    prompt = create_prompt(theme)
+    # theme = input("記事のテーマを入力してください: ")
+    # prompt = create_prompt(theme)
+    prompt = hub.pull("hwchase17/openai-tools-agent")
 
-    response = agent.run(prompt)
+    # response = agent.run(prompt)
+    model = ChatOpenAI()
+
+    agent = create_openai_tools_agent(model, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools)
+
+    response = agent_executor.invoke({"input": "what is (4.5*2.1)^2.2?"})
 
     write_response_to_file(response, "output.txt")
 
