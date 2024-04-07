@@ -5,10 +5,4 @@
 - [OpenAIの API](https://platform.openai.com/docs/overview)学習
 - [ChatGPT API×Pythonで始める対話型AI実装入門](https://amzn.asia/d/9WKDYCl) の写経
   - deprecated APIに対してはできるだけ最新の方法に書き換えていく
-
-
-## samples
-
-- main.py .. 文字起こしをして要約する
-- translate.ly .. 英語に翻訳
   
